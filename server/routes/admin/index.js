@@ -62,4 +62,17 @@ module.exports = app => {
         req.Model = require(`../../models/${modelName}`)
         next();
     }, router)
+
+
+    const multer = require('multer')
+
+    // express不自带上传文件的功能，借助中间件multer上传  
+    // 绝对地址
+    const upload = multer({ dest: __dirname + '/../../uploads' })
+
+    app.post('/admin/api/upload', upload.single('file'), async(req, res) => {
+        const file = req.file
+        file.url = `http://localhost:3000/uploads/${file.filename}`
+        res.send(file)
+    })
 }

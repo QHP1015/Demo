@@ -8,6 +8,9 @@ app.use(require('cors')())
 // post请求返回json文件
 app.use(express.json())
 
+// 静态路由，用于托管文件
+app.use('/uploads', express.static(__dirname + '/uploads'))
+
 require('./plugins/db')(app)
 require('./routes/admin')(app)
 
