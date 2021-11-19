@@ -3,10 +3,15 @@ import App from './App.vue'
 import './plugins/element.js'
 import router from './router'
 
-Vue.config.productionTip = false
+// 属性表格
+import TreeTable from 'vue-table-with-tree-grid'
+Vue.component('tree-table', TreeTable)
 
-import http from './http'
-Vue.prototype.$http = http
+// 进度条
+import 'nprogress/nprogress.css'
+
+
+Vue.config.productionTip = false
 
 new Vue({
     router,

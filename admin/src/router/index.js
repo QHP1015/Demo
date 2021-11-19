@@ -1,48 +1,93 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
-// 分类
-import CategoryEdit from '../views/CategoryEdit.vue'
-import CategoryList from '../views/CategoryList.vue'
-// 物品
-import ItemEdit from '../views/ItemEdit.vue'
-import ItemList from '../views/ItemList.vue'
-// 英雄
-import HeroEdit from '../views/HeroEdit.vue'
-import HeroList from '../views/HeroList.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
-        path: '/',
-        name: 'main',
-        component: Main,
-        // 子路由
-        children: [
-            // 分类
-            { path: '/categories/create', component: CategoryEdit },
-            // 设置路由，访问同一个页面
-            { path: '/categories/edit/:id', component: CategoryEdit, props: true },
-            { path: '/categories/list', component: CategoryList },
+    path: '/login',
+    component: () => import('../views/Login.vue'),
+    meta: {
+        noRequiredAuth: true
+    }
+}, {
+    path: '/',
+    name: 'main',
+    component: Main,
+    // 子路由
+    children: [
+        //welcome
+        // {
+        //     path: 'welcome',
+        //     component: () => import('../views/Welcome.vue')
+        // },
+        //分类
+        {
+            path: 'category',
+            component: () => import('../views/Category.vue')
+        },
 
-            // 物品
-            { path: '/items/create', component: ItemEdit },
-            { path: '/items/edit/:id', component: ItemEdit, props: true },
-            { path: '/items/list', component: ItemList },
+        //物品
+        {
+            path: 'item',
+            component: () => import('../views/Item.vue')
+        },
 
-            // 英雄
-            { path: '/heroes/create', component: HeroEdit },
-            { path: '/heroes/edit/:id', component: HeroEdit, props: true },
-            { path: '/heroes/list', component: HeroList },
-        ]
-    },
+        //英雄
+        {
+            path: 'hero/create',
+            component: () => import('../views/hero/HeroEdit.vue')
+        },
+        {
+            path: 'hero/edit/:id',
+            component: () => import('../views/hero/HeroEdit.vue'),
+            props: true
+        },
+        {
+            path: 'hero/list',
+            component: () => import('../views/hero/HeroList.vue')
+        },
 
-]
+        //文章
+        {
+            path: 'article/create',
+            component: () => import('../views/article/ArticleEdit.vue')
+        },
+        {
+            path: 'article/edit/:id',
+            component: () => import('../views/article/ArticleEdit.vue'),
+            props: true
+        },
+        {
+            path: 'article/list',
+            component: () => import('../views/article/ArticleList.vue')
+        },
+
+        //广告位
+        {
+            path: 'ad/list',
+            component: () => import('../views/AdList.vue')
+        },
+
+        //用户
+        {
+            path: 'admin_user/list',
+            component: () => import('../views/AdminUserList.vue')
+        }
+    ]
+}, ]
 
 const router = new VueRouter({
     mode: 'history',
-    base: process.env.BASE_URL,
     routes
+})
+
+// 导航守卫，路由限制
+router.beforeEach((to, from, next) => {
+    if (!to.meta.noRequiredAuth && !sessionStorage.token) {
+        return next('/login')
+    }
+    return next()
 })
 
 export default router
