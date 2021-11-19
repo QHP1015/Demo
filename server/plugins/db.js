@@ -5,4 +5,8 @@ module.exports = app => {
         // 避免“不建议使用当前URL字符串解析器”警告
         useNewUrlParser: true
     })
+
+
+
+    require('require-all')(__dirname,'/../models')
 }

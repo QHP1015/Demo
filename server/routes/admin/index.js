@@ -7,7 +7,6 @@ module.exports = app => {
         mergeParams: true
     })
 
-
     // 创建接口
     router.post('/', async(req, res) => {
         const model = await req.Model.create(req.body)
@@ -30,7 +29,7 @@ module.exports = app => {
         })
     })
 
-    // 查询接口
+    // 查询资源列表接口
     router.get('/', async(req, res) => {
 
         // 查询时有时需要关联查询有时不需要，通过设置setOptions转换为数据
@@ -39,40 +38,78 @@ module.exports = app => {
             // 添加关联查询populate，获得的是一个对象，前端可以通过调用对象属性获取值
             queryOptions.populate = 'parent'
         }
-        const items = await req.Model.find().setOptions(queryOptions).limit(10)
+        const items = await req.Model.find().setOptions(queryOptions).limit(100)
 
         res.send(items)
     })
 
+    // 查询资源详情接口
     router.get('/:id', async(req, res) => {
         const model = await req.Model.findById(req.params.id)
         res.send(model)
     })
 
-    // 创建通用CRUD接口，提供动态参数
-    app.use('/admin/api/rest/:resource', async(req, res, next) => {
-        // 通过使用中间件，在调用之前执行这个方法
+    // 登录校验中间件
+    const authMiddleware = require('../../middleware/auth')
 
-        // 格式化名称，不然前端访问不到数据
-        const modelName = require('inflection').classify(req.params.resource)
-
-        // 测试是否转换成功
-        // return res.send({ modelName })
-
-        req.Model = require(`../../models/${modelName}`)
-        next();
-    }, router)
-
-
-    const multer = require('multer')
+    // 资源中间件
+    const resourceMiddleware = require('../../middleware/resource')
+        // 创建通用CRUD接口，提供动态参数
+    app.use('/admin/api/rest/:resource', /*authMiddleware(), */ resourceMiddleware(), router)
 
     // express不自带上传文件的功能，借助中间件multer上传  
-    // 绝对地址
-    const upload = multer({ dest: __dirname + '/../../uploads' })
+    const multer = require('multer')
+        // 绝对地址
+    const upload = multer({
+        dest: __dirname + '/../../uploads'
+    })
 
-    app.post('/admin/api/upload', upload.single('file'), async(req, res) => {
+    app.post('/admin/api/upload', /*authMiddleware(),*/ upload.single('file'), async(req, res) => {
         const file = req.file
         file.url = `http://localhost:3000/uploads/${file.filename}`
         res.send(file)
+    })
+
+    // 登录接口
+    app.post('/admin/api/login', async(req, res) => {
+        const {
+            username,
+            password
+        } = req.body
+
+        // 1.根据用户名找用户
+        const user = await AdminUser.findOne({
+                username
+            }).select('+password') // 顺便取出密码
+
+        // 若用户不存在
+        assert(user, 422, '用户不存在')
+
+        // if(!user){
+        //     return res.status(422).send({
+        //         message:'用户不存在'
+        //     })
+        // }
+
+        // 2.校验密码
+        // 若用户存在
+        const isValid = require('bcrypt').compareSync(password, user.password)
+        assert(isValid, 422, '密码错误')
+
+        // 3.返回token
+        const token = jwt.sign({
+                id: user._id,
+            }, app.get('secret')) // 获取密钥
+        res.send({
+            token
+        })
+    })
+
+
+    // 错误处理
+    app.use(async(err, req, res, next) => {
+        res.status(err.statusCode || 500).send({
+            message: err.message
+        })
     })
 }

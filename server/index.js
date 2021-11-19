@@ -2,6 +2,9 @@ const express = require("express")
 
 const app = express()
 
+// 全局密钥
+app.set('secret', 'hgjfhghgdhgdlhglaghflhj')
+
 // 跨域模块
 app.use(require('cors')())
 
@@ -13,6 +16,10 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 
 require('./plugins/db')(app)
 require('./routes/admin')(app)
+require('./routes/web')(app)
+
+
+
 
 
 app.listen(3000, () => {
