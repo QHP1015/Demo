@@ -3,7 +3,7 @@ import App from './App.vue'
 import './plugins/element.js'
 import router from './router'
 
-// 属性表格
+// 树形表格
 import TreeTable from 'vue-table-with-tree-grid'
 Vue.component('tree-table', TreeTable)
 

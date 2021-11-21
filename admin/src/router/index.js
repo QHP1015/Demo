@@ -16,11 +16,6 @@ const routes = [{
     component: Main,
     // 子路由
     children: [
-        //welcome
-        // {
-        //     path: 'welcome',
-        //     component: () => import('../views/Welcome.vue')
-        // },
         //分类
         {
             path: 'category',

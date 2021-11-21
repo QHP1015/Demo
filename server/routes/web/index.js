@@ -116,6 +116,7 @@ module.exports = app => {
 
   // 获取精彩视频数据接口
   router.get('/videos', async (req, res) => {
+    // 初始化数据
     // 获取赛事视频数据
     // const data = [{ "title": "王者荣耀世冠：远游之枪华丽收割，花满楼世冠马可波罗击杀集锦", "url": "https://pvp.qq.com/m/m201606/detail.shtml?G_Biz=18&tid=550567&e_code=pvpweb_m.statictypenew.type751", "img": "https://puui.qpic.cn/qqvideo_ori/0/z092122i7uv_1280_720/0", "play_volume": "4.6万" }, { "title": "Djie一闪侧翼进场，梦奇小爪子疯狂乱舞！", "url": "https://pvp.qq.com/m/m201606/detail.shtml?G_Biz=18&tid=550792&e_code=pvpweb_m.statictypenew.type751", "img": "https://puui.qpic.cn/qqvideo_ori/0/g0921jhs0ha_1280_720/0", "play_volume": "3.1万" }, { "title": "花海云中君暴走时刻，这波三杀真的帅气！", "url": "https://pvp.qq.com/m/m201606/detail.shtml?G_Biz=18&tid=550566&e_code=pvpweb_m.statictypenew.type751", "img": "https://puui.qpic.cn/qqvideo_ori/0/r09212zlrm4_1280_720/0", "play_volume": "2.3万" }, { "title": "世冠雨雨关羽集锦：这就是实力！千万雄兵莫敢当，单刀匹马斩四方", "url": "https://pvp.qq.com/m/m201606/detail.shtml?G_Biz=18&tid=550251&e_code=pvpweb_m.statictypenew.type751", "img": "https://puui.qpic.cn/qqvideo_ori/0/b0921yawkou_1280_720/0", "play_volume": "3.2万" }]
 
@@ -162,8 +163,6 @@ module.exports = app => {
 
   // 获取图文攻略数据接口
   router.get('/graphics', async (req, res) => {
-
-    // console.log(req.query);
 
     if (req.query.id && req.query.pageNum) {
 

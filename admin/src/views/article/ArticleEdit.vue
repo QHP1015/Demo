@@ -5,8 +5,10 @@
       <el-breadcrumb-item>{{id?'编辑':'创建'}}文章</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
+      <!-- .native 表示对一个组件绑定系统原生事件  .prevent 表示提交以后不刷新页面 -->
       <el-form label-width="80px" @submit.native.prevent="save">
         <el-form-item label="所属分类">
+          <!-- multiple表示多选 -->
           <el-select v-model="model.cate" placeholder="请选择所属分类" clearable multiple>
             <el-option
               v-for="item in cateList"
@@ -63,7 +65,9 @@ export default {
       if (!this.id) {
         const res = await createArticle(this.model)
         if(!res) return
+        // 返回创建成功信息提示
         this.$message.success('创建文章成功')
+        // 添加进数据库
         this.$router.push('/article/list')
       } else {
         const res = await updateArticle(this.id, this.model)
@@ -82,18 +86,13 @@ export default {
       const res = await getCateList()
       const data = res.data.find(item => item.name === '新闻资讯')
       this.cateList = data.children
-      // console.log(data);
-
     },
     async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
       const formData = new FormData()
       formData.append('file', file)
-
       const res = await articleImgUpload(formData)
-
       Editor.insertEmbed(cursorLocation, "image", res.data.url);
       resetUploader()
-
     }
 
   },

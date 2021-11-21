@@ -152,79 +152,79 @@
             position: {
               'background-position': '-8.78rem -2.6rem'
             },
-            url: "https://pvp.qq.com/m/m201706/coming/index.htm"
+            url: "/"
           },
           {
             text: '故事站',
             position: {
               'background-position': '-12.58rem -2.6rem'
             },
-            url: "https://pvp.qq.com/act/a20160510story/index.htm?ADTAG=PC.QrCode.TG"
+            url: "/"
           },
           {
             text: '周边商城',
             position: {
               'background-position': '-4.98rem -0.12rem'
             },
-            url: "https://pvp.qq.com/mall/m"
+            url: "/"
           },
           {
             text: '体验服',
             position: {
               'background-position': '-1.26rem -2.6rem'
             },
-            url: "https://pvp.qq.com/cp/a20161116tyf/page01.htm"
+            url: "/"
           },
           {
             text: '新人专区',
             position: {
               'background-position': '-12.52rem -0.12rem'
             },
-            url: "https://pvp.qq.com/m/m201606/goCenter.shtml"
+            url: "/"
           },
           {
             text: '荣耀传承',
             position: {
               'background-position': '-4.98rem -2.56rem'
             },
-            url: "https://pvp.qq.com/m/memory/index.shtml"
+            url: "/"
           },
           {
             text: '模拟战资料库',
             position: {
               'background-position': '-1.28rem -0.12rem'
             },
-            url: "https://pvp.qq.com/m/wzmnzm/index.html"
+            url: "/"
           },
           {
             text: '王者营地',
             position: {
               'background-position': '-8.76rem -0.12rem'
             },
-            url: "https://image.ttwz.qq.com/wzry/wzryzs_download_4001.htm?ADTAG=mpvp.qq.com"
+            url: "/"
           },
           {
             text: '公众号',
             position: {
               'background-position': '0.16rem -16.64rem'
             },
-            url: "https://game.weixin.qq.com/cgi-bin/comm/openlink?noticeid=90102708&appid=wx95a3a4d7c627e07d&url=https%3A%2F%2Fgame.weixin.qq.com%2Fcgi-bin%2Fh5%2Fstatic%2Fsubscribe%2Findex.html%3Fappid%3Dwx95a3a4d7c627e07d#wechat_redirect"
+            url: "/"
           },
           {
             text: '版本介绍',
-            url: "https://pvp.qq.com/cp/a20190320bbgxsmm/index.html"
+            url: "/"
           },
           {
             text: '对局环境',
-            url: "https://pvp.qq.com/cp/a20190917station/index.html"
+            url: "/"
           },
           {
             text: '无限王者团',
-            url: "https://pvp.qq.com/cp/a20190827boundlessp/index.html"
+            url: "/"
           },
           {
             text: '创意互动营',
-            url: "https://pvp.qq.com/m/hdy/p1/index.html"
+            url: "/"
           }
         ],
         //收起展开
@@ -278,7 +278,6 @@
       // 上拉加载
       async pullingUp() {
         this.scroll.refresh()
-        // console.log(this.pageNum);
         if (this.pageNum === 3) return
         const res = await getGraphics({
           id: this.graphicList[this.currentGraphic]._id,

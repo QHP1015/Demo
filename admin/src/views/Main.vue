@@ -4,7 +4,7 @@
     <el-header style="text-align: right; font-size: 12px">
       <div class="logo-title">
         <img src="../assets/img/home/logo1.png" alt="王者荣耀" />
-        <h2>王者荣耀后台管理系统</h2>
+        <h2>MOBA游戏官网后台管理系统</h2>
       </div>
       <el-button
         type="text"

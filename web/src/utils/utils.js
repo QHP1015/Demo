@@ -1,3 +1,4 @@
+// 设置工具类
 export function debounce(fn, delay) {
   let timer = null
   return function (...args) {
